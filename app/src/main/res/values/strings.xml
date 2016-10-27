@@ -34,5 +34,6 @@
     <string name="Description">تفاصيل الطلب</string>
     <string name="profession">نوع الحرفه</string>
     <string name="order">طلب</string>
+    <string name="dummy_address">الحى السادس 6 اكتوبر</string>
 
 </resources>

@@ -38,7 +38,8 @@
             android:name=".screens.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.AddRequest"></activity>
+        <activity android:name=".screens.AddRequest" />
+        <activity android:name=".screens.ClientRequestDetails"></activity>
     </application>
 
 </manifest>

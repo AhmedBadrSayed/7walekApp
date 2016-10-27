@@ -3,7 +3,6 @@ package com.mal.a7walek.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,7 +17,7 @@ import android.view.MenuItem;
 
 import com.mal.a7walek.DataObjects.ClientRequest;
 import com.mal.a7walek.R;
-import com.mal.a7walek.adapters.MyRecyclerViewAdapter;
+import com.mal.a7walek.adapters.ClientRequestsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecyclerView;
-    private MyRecyclerViewAdapter myRecyclerViewAdapter;
+    private ClientRequestsAdapter clientRequestsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ClientRequest> requestsList;
     private static String LOG_TAG = "CardViewActivity";
@@ -63,10 +62,10 @@ public class UserProfile extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter(requestsList);
-        mRecyclerView.setAdapter(myRecyclerViewAdapter);
+        clientRequestsAdapter = new ClientRequestsAdapter(requestsList);
+        mRecyclerView.setAdapter(clientRequestsAdapter);
 
-        myRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.MyClickListener() {
+        clientRequestsAdapter.setOnItemClickListener(new ClientRequestsAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
 
@@ -121,17 +120,11 @@ public class UserProfile extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_log_out) {
 
         }
 

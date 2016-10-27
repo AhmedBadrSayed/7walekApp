@@ -8,32 +8,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mal.a7walek.R;
 import com.mal.a7walek.DataObjects.ClientRequest;
+import com.mal.a7walek.R;
 
 import java.util.List;
 
 /**
- * Created by Ahmed Badr on 1/9/2016.
+ * Created by Ahmed Badr on 27/10/2016.
  */
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ProductsViewHolder> {
+public class ClientRequestDetailsAdapter extends RecyclerView.Adapter<ClientRequestDetailsAdapter.requestsViewHolder> {
 
     List<ClientRequest> clientRequests;
     private static MyClickListener myClickListener;
 
-    public MyRecyclerViewAdapter(List<ClientRequest> clientRequests){
+    public ClientRequestDetailsAdapter(List<ClientRequest> clientRequests){
         this.clientRequests = clientRequests;
     }
 
     @Override
-    public ProductsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_row, parent, false);
-        ProductsViewHolder pvh = new ProductsViewHolder(v);
+    public requestsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_client_request, parent, false);
+        requestsViewHolder pvh = new requestsViewHolder(v);
         return pvh;
     }
 
     @Override
-    public void onBindViewHolder(ProductsViewHolder holder, int position) {
+    public void onBindViewHolder(requestsViewHolder holder, int position) {
         holder.clientName.setText(clientRequests.get(position).clientName);
         holder.requestDescription.setText(clientRequests.get(position).requestDescription);
         holder.requestPhoto.setImageResource(clientRequests.get(position).requestPhoto);
@@ -54,7 +54,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class requestsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cv;
         TextView clientName;
@@ -62,7 +62,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         ImageView requestPhoto;
 
 
-        public ProductsViewHolder(View itemView) {
+        public requestsViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             clientName = (TextView)itemView.findViewById(R.id.clientName);
