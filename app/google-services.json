@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "286591018426",
+    "firebase_url": "https://walek-ce7ed.firebaseio.com",
+    "project_id": "walek-ce7ed",
+    "storage_bucket": "walek-ce7ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286591018426:android:b3b22dd2171d6088",
+        "android_client_info": {
+          "package_name": "com.mal.a7walek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286591018426-kld1snb40d2m0vdaooh7ivlce4kacur3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mal.a7walek",
+            "certificate_hash": "1D16536EFF169B7FCFAC64840AA13E4D2990DABF"
+          }
+        },
+        {
+          "client_id": "286591018426-39jllv40ibst85cun4cl0n7m7qokrfs7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABcWnHJF7T1FfPZJ32Pqnn4t4xFa9sRvs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286591018426-39jllv40ibst85cun4cl0n7m7qokrfs7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">7walek</string>
+    <string name="facebook_app_id">323172838043912</string>
+    <string name="fb_login_protocol_scheme">fb323172838043912</string>
+    <string name="or">____________________أو___________________</string>
+
+    <!--              WorkerCompleteProfile       -->
+    <string name="tv_name_label">الاسم</string>
+    <string name="tv_address_label">العنوان</string>
+    <string name="tv_number_label">رقم المحمول</string>
+    <string name="tv_profession_label">المهنه</string>
+    <string name="tv_years_label">سنوات الخبره</string>
+    <string name="btn_id_label">البطاقه القوميه</string>
+    <string name="btn_done_label">حفظ</string>
+    <string name="btn_login_label">تسجيل الدخول</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_tab_user_requests">الطلبات الحاليه</string>
+    <string name="title_tab_user_history">الطلبات السابقه</string>
+    <string name="txt_dummy">القرية الذكية , مبني وزارة الاتصالات</string>
+    <string name="short_desc">استطيع تنفيذ الوظيفه بكفاءه عاليه و مبلغ فى متناول اليد</string>
+    <string name="request_desc">تصليح كرسى رجله مكسوره فى اسرع وقت</string>
+    <string name="dummy_name">احمد عبد العاطى</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="profile">الصفحه الشخصيه</string>
+    <string name="client">طالب خدمه</string>
+    <string name="worker">صاحب حرفه</string>
+    <string name="Description">تفاصيل الطلب</string>
+    <string name="profession">نوع الحرفه</string>
+    <string name="order">طلب</string>
+
+</resources>
