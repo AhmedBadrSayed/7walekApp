@@ -34,7 +34,6 @@ public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAd
 
     @Override
     public void onBindViewHolder(requestsViewHolder holder, int position) {
-        holder.clientName.setText(clientRequests.get(position).clientName);
         holder.requestDescription.setText(clientRequests.get(position).requestDescription);
         holder.requestPhoto.setImageResource(clientRequests.get(position).requestPhoto);
     }
@@ -57,7 +56,6 @@ public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAd
     public class requestsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cv;
-        TextView clientName;
         TextView requestDescription;
         ImageView requestPhoto;
 
@@ -65,8 +63,7 @@ public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAd
         public requestsViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            clientName = (TextView)itemView.findViewById(R.id.clientName);
-            requestDescription = (TextView)itemView.findViewById(R.id.descreption);
+            requestDescription = (TextView)itemView.findViewById(R.id.clientDescription);
             requestPhoto = (ImageView)itemView.findViewById(R.id.requestImage);
             itemView.setOnClickListener(this);
         }

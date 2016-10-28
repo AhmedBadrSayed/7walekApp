@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/btn_id_label"
             android:layout_marginBottom="10dp"
+            android:layout_gravity="right"
             android:onClick="uploadNationalID"
             android:background="#ffffff"/>
 

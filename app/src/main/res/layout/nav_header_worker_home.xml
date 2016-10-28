@@ -41,4 +41,14 @@
         android:textSize="13pt"
         android:textColor="#ffffff"/>
 
+    <TextView
+        android:id="@+id/client_profile_profession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/profession"
+        android:layout_marginTop="5dp"
+        android:textSize="13pt"
+        android:textColor="#ffffff"/>
+
 </LinearLayout>

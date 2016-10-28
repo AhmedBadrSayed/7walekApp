@@ -49,7 +49,7 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.user_login:
-                Intent intent = new Intent(UserType.this, UserCompleteProfile.class);
+                Intent intent = new Intent(UserType.this, ClientCompleteProfile.class);
                 intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
                 startActivity(intent);
                 break;

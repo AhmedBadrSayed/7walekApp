@@ -35,5 +35,12 @@
     <string name="profession">نوع الحرفه</string>
     <string name="order">طلب</string>
     <string name="dummy_address">الحى السادس 6 اكتوبر</string>
+    <string name="offered_price">السعر المعروض</string>
+    <string name="decline_worker">غير موافق</string>
+    <string name="accept_worker">موافق</string>
+    <string name="title_activity_worker_home">WorkerHome</string>
+    <string name="title_activity_worker_request_details">WorkerRequestDetails</string>
+    <string name="done">تم</string>
+    <string name="comment">تعليق</string>
 
 </resources>

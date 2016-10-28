@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.mal.a7walek.R;
 
-public class AddRequest extends AppCompatActivity {
+public class ClientAddRequest extends AppCompatActivity {
 
     ImageView requestImage;
     ImageButton upload;

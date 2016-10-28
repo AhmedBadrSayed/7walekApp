@@ -32,14 +32,25 @@
 
         <activity android:name=".screens.LogIn" />
         <activity android:name=".screens.UserType" />
-        <activity android:name=".screens.UserCompleteProfile" />
+        <activity android:name=".screens.ClientCompleteProfile" />
         <activity android:name=".screens.WorkerCompleteProfile" />
         <activity
-            android:name=".screens.UserProfile"
+            android:name=".screens.ClientHome"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.AddRequest" />
-        <activity android:name=".screens.ClientRequestDetails"></activity>
+        <activity android:name=".screens.ClientAddRequest" />
+        <activity android:name=".screens.WorkerDetails" />
+        <activity android:name=".screens.ClientRequestDetails" />
+        <activity
+            android:name=".screens.WorkerHome"
+            android:label="@string/title_activity_worker_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".screens.WorkerRequestDetails"
+            android:label="@string/title_activity_worker_request_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".screens.WorkerOfferHelp">
+        </activity>
     </application>
 
 </manifest>

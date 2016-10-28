@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.mal.a7walek.screens.WorkerDetails"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/detailed_worker_image"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailed_worker_name"
+            android:layout_toLeftOf="@+id/detailed_worker_image"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/dummy_name"
+            android:textSize="12pt"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailed_worker_address"
+            android:layout_toLeftOf="@+id/detailed_worker_image"
+            android:layout_below="@+id/detailed_worker_name"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/dummy_address"
+            android:textSize="12pt"
+            android:textColor="#000000"
+            android:drawableRight="@drawable/address_icon"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailed_worker_description"
+        android:text="@string/request_desc"
+        android:layout_marginTop="30dp"
+        android:textSize="12pt"
+        android:textColor="#000000"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailed_worker_price"
+            android:text="150.00 EGP"
+            android:layout_centerHorizontal="true"
+            android:textSize="12pt"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/offered_price"
+            android:text="@string/offered_price"
+            android:layout_below="@+id/detailed_worker_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:textSize="12pt"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/worker_decline"
+                android:text="@string/decline_worker"
+                android:textSize="12pt"
+                android:textColor="#ffffff"
+                android:background="#605c5c"
+                android:layout_marginRight="50dp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/worker_accept"
+                android:text="@string/accept_worker"
+                android:textSize="12pt"
+                android:textColor="#ffffff"
+                android:background="#4b5fcc"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

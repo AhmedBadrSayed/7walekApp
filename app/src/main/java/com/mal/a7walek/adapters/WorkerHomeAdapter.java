@@ -8,21 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mal.a7walek.DataObjects.ClientRequestsDetails;
+import com.mal.a7walek.DataObjects.ClientRequest;
+import com.mal.a7walek.DataObjects.WorkerRequest;
 import com.mal.a7walek.R;
 
 import java.util.List;
 
 /**
- * Created by Ahmed Badr on 27/10/2016.
+ * Created by Ahmed Badr on 28/10/2016.
  */
-public class ClientRequestDetailsAdapter extends RecyclerView.Adapter<ClientRequestDetailsAdapter.requestsViewHolder> {
+public class WorkerHomeAdapter extends RecyclerView.Adapter<WorkerHomeAdapter.requestsViewHolder> {
 
-    List<ClientRequestsDetails> clientRequests;
+    List<WorkerRequest> workerRequests;
     private static MyClickListener myClickListener;
 
-    public ClientRequestDetailsAdapter(List<ClientRequestsDetails> clientRequests){
-        this.clientRequests = clientRequests;
+    public WorkerHomeAdapter(List<WorkerRequest> workerRequests){
+        this.workerRequests = workerRequests;
     }
 
     @Override
@@ -34,19 +35,18 @@ public class ClientRequestDetailsAdapter extends RecyclerView.Adapter<ClientRequ
 
     @Override
     public void onBindViewHolder(requestsViewHolder holder, int position) {
-        holder.workerName.setText(clientRequests.get(position).workerName);
-        holder.requestDescription.setText(clientRequests.get(position).requestDescription);
-        holder.requestPhoto.setImageResource(clientRequests.get(position).requestPhoto);
-        holder.pricetv.setText((int) clientRequests.get(position).price);
+        holder.clientNametv.setText(workerRequests.get(position).clientName);
+        holder.clientDescriptiontv.setText(workerRequests.get(position).clientDescription);
+        holder.clientPhoto.setImageResource(workerRequests.get(position).clientPhoto);
     }
 
     @Override
     public int getItemCount() {
-        return clientRequests.size();
+        return workerRequests.size();
     }
 
-    public void addItem(ClientRequestsDetails clientRequest, int index) {
-        clientRequests.add(index, clientRequest);
+    public void addItem(WorkerRequest workerRequest, int index) {
+        workerRequests.add(index, workerRequest);
         notifyItemInserted(index);
     }
 
@@ -58,19 +58,17 @@ public class ClientRequestDetailsAdapter extends RecyclerView.Adapter<ClientRequ
     public class requestsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cv;
-        TextView workerName;
-        TextView requestDescription;
-        ImageView requestPhoto;
-        TextView pricetv;
+        TextView clientDescriptiontv;
+        TextView clientNametv;
+        ImageView clientPhoto;
 
 
         public requestsViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.client_request_details_cv);
-            workerName = (TextView)itemView.findViewById(R.id.workerName);
-            requestDescription = (TextView)itemView.findViewById(R.id.worker_description);
-            requestPhoto = (ImageView)itemView.findViewById(R.id.worker_image);
-            pricetv = (TextView) itemView.findViewById(R.id.client_price);
+            cv = (CardView)itemView.findViewById(R.id.worker_home_cv);
+            clientDescriptiontv = (TextView)itemView.findViewById(R.id.client_description);
+            clientNametv = (TextView)itemView.findViewById(R.id.client_name);
+            clientPhoto = (ImageView)itemView.findViewById(R.id.client_image);
             itemView.setOnClickListener(this);
         }
 

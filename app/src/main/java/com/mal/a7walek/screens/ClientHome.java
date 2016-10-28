@@ -22,7 +22,7 @@ import com.mal.a7walek.adapters.ClientRequestsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserProfile extends AppCompatActivity
+public class ClientHome extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecyclerView;
@@ -42,7 +42,7 @@ public class UserProfile extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplication() , AddRequest.class));
+                startActivity(new Intent(getApplication() , ClientAddRequest.class));
             }
         });
 
@@ -55,7 +55,7 @@ public class UserProfile extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        initializeData();
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -68,6 +68,7 @@ public class UserProfile extends AppCompatActivity
         clientRequestsAdapter.setOnItemClickListener(new ClientRequestsAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
+                startActivity(new Intent(getApplication(),ClientRequestDetails.class));
 
             }
         });
@@ -75,11 +76,11 @@ public class UserProfile extends AppCompatActivity
 
     private void initializeData() {
         requestsList = new ArrayList<>();
-        requestsList.add(0,new ClientRequest(getString(R.string.dummy_name),getString(R.string.request_desc),R.mipmap.ic_launcher));
-        requestsList.add(1,new ClientRequest(getString(R.string.dummy_name),getString(R.string.request_desc),R.mipmap.ic_launcher));
-        requestsList.add(2,new ClientRequest(getString(R.string.dummy_name),getString(R.string.request_desc),R.mipmap.ic_launcher));
-        requestsList.add(3,new ClientRequest(getString(R.string.dummy_name),getString(R.string.request_desc),R.mipmap.ic_launcher));
-        requestsList.add(4,new ClientRequest(getString(R.string.dummy_name),getString(R.string.request_desc),R.mipmap.ic_launcher));
+        requestsList.add(0,new ClientRequest(getString(R.string.request_desc),R.mipmap.ic_launcher));
+        requestsList.add(1,new ClientRequest(getString(R.string.request_desc),R.mipmap.ic_launcher));
+        requestsList.add(2,new ClientRequest(getString(R.string.request_desc),R.mipmap.ic_launcher));
+        requestsList.add(3,new ClientRequest(getString(R.string.request_desc),R.mipmap.ic_launcher));
+        requestsList.add(4,new ClientRequest(getString(R.string.request_desc),R.mipmap.ic_launcher));
     }
 
     @Override

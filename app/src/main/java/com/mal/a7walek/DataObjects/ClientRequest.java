@@ -6,12 +6,10 @@ package com.mal.a7walek.DataObjects;
  */
 public class ClientRequest {
 
-    public String clientName;
     public String requestDescription;
     public int requestPhoto;
 
-    public ClientRequest(String clientName, String requestDescription, int requestPhoto) {
-        this.clientName = clientName;
+    public ClientRequest(String requestDescription, int requestPhoto) {
         this.requestDescription = requestDescription;
         this.requestPhoto = requestPhoto;
     }

@@ -11,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mal.a7walek.R;
-import com.mal.a7walek.utility.Util;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UserCompleteProfile extends AppCompatActivity implements View.OnClickListener{
+public class ClientCompleteProfile extends AppCompatActivity implements View.OnClickListener{
 
     @BindView(R.id.image_profile)
     ImageView userImage;
@@ -35,7 +34,7 @@ public class UserCompleteProfile extends AppCompatActivity implements View.OnCli
     String UserInfo, UserName, ProfilePic;
     String[] DetailsArray;
 
-    String TAG = UserCompleteProfile.this.getClass().getSimpleName();
+    String TAG = ClientCompleteProfile.this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class UserCompleteProfile extends AppCompatActivity implements View.OnCli
      * @param view
      */
     public void saveProfile(View view) {
-        startActivity(new Intent(this,UserProfile.class));
+        startActivity(new Intent(this,ClientHome.class));
     }
 
 
