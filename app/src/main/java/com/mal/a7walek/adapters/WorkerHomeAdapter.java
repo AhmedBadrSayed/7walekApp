@@ -1,5 +1,6 @@
 package com.mal.a7walek.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mal.a7walek.DataObjects.ClientRequest;
-import com.mal.a7walek.DataObjects.WorkerRequest;
 import com.mal.a7walek.R;
+import com.mal.a7walek.models.Job;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,25 +20,27 @@ import java.util.List;
  */
 public class WorkerHomeAdapter extends RecyclerView.Adapter<WorkerHomeAdapter.requestsViewHolder> {
 
-    List<WorkerRequest> workerRequests;
+    List<Job> workerRequests;
+    Context ctx;
     private static MyClickListener myClickListener;
 
-    public WorkerHomeAdapter(List<WorkerRequest> workerRequests){
+    public WorkerHomeAdapter(Context ctx,List<Job> workerRequests){
         this.workerRequests = workerRequests;
+        this.ctx=ctx;
     }
 
     @Override
     public requestsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_client_request, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_worker_home, parent, false);
         requestsViewHolder pvh = new requestsViewHolder(v);
         return pvh;
     }
 
     @Override
     public void onBindViewHolder(requestsViewHolder holder, int position) {
-        holder.clientNametv.setText(workerRequests.get(position).clientName);
-        holder.clientDescriptiontv.setText(workerRequests.get(position).clientDescription);
-        holder.clientPhoto.setImageResource(workerRequests.get(position).clientPhoto);
+        holder.clientNametv.setText(workerRequests.get(position).getUser_token());
+        holder.clientDescriptiontv.setText(workerRequests.get(position).getDescription());
+        Picasso.with(ctx).load(workerRequests.get(position).getImage_url()).into(holder.clientPhoto);
     }
 
     @Override
@@ -45,7 +48,7 @@ public class WorkerHomeAdapter extends RecyclerView.Adapter<WorkerHomeAdapter.re
         return workerRequests.size();
     }
 
-    public void addItem(WorkerRequest workerRequest, int index) {
+    public void addItem(Job workerRequest, int index) {
         workerRequests.add(index, workerRequest);
         notifyItemInserted(index);
     }

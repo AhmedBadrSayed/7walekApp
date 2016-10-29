@@ -12,18 +12,11 @@ public class User {
     String userName , token , image_url , address , phoneNumber;
     double lat , lng ;
     HashMap<String,Object> jobs ;
-    /*
-        jobs : {
-                ij8874asfg : true;
-                ybnb5484sf : true;
-                }
-     */
 
 
     public User(){
 
     }
-
 
     public User(String userName, String token, String image_url, String address, double lat, double lng, String phoneNumber) {
         this.userName = userName;

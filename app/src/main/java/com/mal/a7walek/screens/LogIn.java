@@ -71,7 +71,9 @@ public class LogIn extends AppCompatActivity {
                             btnProfile.setVisibility(View.VISIBLE);
                             Intent intent = new Intent(LogIn.this, UserType.class);
                             intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
+
                             startActivity(intent);
+
                         }
                     };
                 }else {
@@ -80,7 +82,9 @@ public class LogIn extends AppCompatActivity {
                     ProfilePic = String.valueOf(profile.getProfilePictureUri(100,100));
                     Intent intent = new Intent(LogIn.this, UserType.class);
                     intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
+
                     startActivity(intent);
+
                 }
             }
 

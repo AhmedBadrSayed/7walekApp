@@ -13,6 +13,10 @@ public class PrefManager {
         return preferences(context).getInt(name, defaultValue);
     }
 
+    public static float getFloatValue(Context context, String name, float defaultValue){
+        return preferences(context).getFloat(name, defaultValue);
+    }
+
     public static String getStringValue(Context context, String name, String defaultValue){
         return preferences(context).getString(name, defaultValue);
     }
@@ -30,6 +34,12 @@ public class PrefManager {
     public static void saveBooleanValue(Context context, String name, boolean value){
         SharedPreferences.Editor editor = preferences(context).edit();
         editor.putBoolean(name, value);
+        editor.apply();
+    }
+
+    public static void saveFloatValue(Context context, String name, float value){
+        SharedPreferences.Editor editor = preferences(context).edit();
+        editor.putFloat(name, value);
         editor.apply();
     }
 

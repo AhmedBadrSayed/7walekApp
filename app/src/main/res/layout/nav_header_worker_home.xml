@@ -12,7 +12,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/client_profile_image"
+        android:id="@+id/worker_profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,11 +28,11 @@
         android:textSize="15pt"
         android:textStyle="bold"
         android:textColor="#ffffff"
-        android:id="@+id/client_profile_name"
+        android:id="@+id/worker_profile_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/client_profile_adress"
+        android:id="@+id/worker_profile_adress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -42,7 +42,7 @@
         android:textColor="#ffffff"/>
 
     <TextView
-        android:id="@+id/client_profile_profession"
+        android:id="@+id/worker_profile_profession"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

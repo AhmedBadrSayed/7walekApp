@@ -1,5 +1,6 @@
 package com.mal.a7walek.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mal.a7walek.R;
-import com.mal.a7walek.DataObjects.ClientRequest;
+import com.mal.a7walek.models.Job;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,10 +20,12 @@ import java.util.List;
  */
 public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAdapter.requestsViewHolder> {
 
-    List<ClientRequest> clientRequests;
+    List<Job> clientRequests;
+    Context ctx;
     private static MyClickListener myClickListener;
 
-    public ClientRequestsAdapter(List<ClientRequest> clientRequests){
+    public ClientRequestsAdapter(Context ctx , List<Job> clientRequests){
+        this.ctx = ctx;
         this.clientRequests = clientRequests;
     }
 
@@ -34,8 +38,9 @@ public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAd
 
     @Override
     public void onBindViewHolder(requestsViewHolder holder, int position) {
-        holder.requestDescription.setText(clientRequests.get(position).requestDescription);
-        holder.requestPhoto.setImageResource(clientRequests.get(position).requestPhoto);
+        holder.requestDescription.setText(clientRequests.get(position).getDescription());
+        holder.requestDescription.setText(clientRequests.get(position).getDescription());
+        Picasso.with(ctx).load(clientRequests.get(position).getImage_url()).into(holder.requestPhoto);
     }
 
     @Override
@@ -43,7 +48,7 @@ public class ClientRequestsAdapter extends RecyclerView.Adapter<ClientRequestsAd
         return clientRequests.size();
     }
 
-    public void addItem(ClientRequest clientRequest, int index) {
+    public void addItem(Job clientRequest, int index) {
         clientRequests.add(index, clientRequest);
         notifyItemInserted(index);
     }

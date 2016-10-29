@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mal.a7walek.R;
+import com.mal.a7walek.data.PrefManager;
 import com.squareup.picasso.Picasso;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
@@ -49,14 +50,23 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.user_login:
-                Intent intent = new Intent(UserType.this, ClientCompleteProfile.class);
-                intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
-                startActivity(intent);
+                if(!PrefManager.getStringValue(this,getString(R.string.pref_my_phone),"").equals("")){
+                    startActivity(new Intent(UserType.this,ClientHome.class) );
+                }else {
+                    Intent intent = new Intent(UserType.this, ClientCompleteProfile.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
+                    startActivity(intent);
+                }
                 break;
+
             case R.id.worker_login:
-                Intent intent1 = new Intent(UserType.this, WorkerCompleteProfile.class);
-                intent1.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
-                startActivity(intent1);
+                if(!PrefManager.getStringValue(this,getString(R.string.pref_my_profession),"").equals("")){
+                    startActivity(new Intent(UserType.this,WorkerHome.class) );
+                }else {
+                    Intent intent1 = new Intent(UserType.this, WorkerCompleteProfile.class);
+                    intent1.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
+                    startActivity(intent1);
+                }
                 break;
         }
     }
