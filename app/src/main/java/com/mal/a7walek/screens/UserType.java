@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.mal.a7walek.R;
 import com.mal.a7walek.data.PrefManager;
-import com.squareup.picasso.Picasso;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,17 +23,17 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_user_type);
         setViews();
 
-        Intent intent = this.getIntent();
-        if(intent!=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
-            DetailsArray = UserInfo.split("!");
-            UserName = DetailsArray[0];
-            ProfilePic = DetailsArray[1];
-        }
-
-        userNameTV.setText(UserName);
-        //feh moshkela fil picasso
-        Picasso.with(this).load(ProfilePic).into(profilePicIV);
+//        Intent intent = this.getIntent();
+//        if(intent!=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+//            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
+//            DetailsArray = UserInfo.split("!");
+//            UserName = DetailsArray[0];
+//            ProfilePic = DetailsArray[1];
+//        }
+//
+//        userNameTV.setText(UserName);
+//        //feh moshkela fil picasso
+//        Picasso.with(this).load(ProfilePic).into(profilePicIV);
     }
 
     public void setViews(){
@@ -54,7 +53,7 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
                     startActivity(new Intent(UserType.this,ClientHome.class) );
                 }else {
                     Intent intent = new Intent(UserType.this, ClientCompleteProfile.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
+                //    intent.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
                     startActivity(intent);
                 }
                 break;
@@ -64,7 +63,7 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
                     startActivity(new Intent(UserType.this,WorkerHome.class) );
                 }else {
                     Intent intent1 = new Intent(UserType.this, WorkerCompleteProfile.class);
-                    intent1.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
+               //     intent1.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
                     startActivity(intent1);
                 }
                 break;

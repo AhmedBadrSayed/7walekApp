@@ -18,7 +18,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".screens.Splash">
+        <activity android:name=".screens.Splash"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,26 +32,41 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".screens.LogIn" />
-        <activity android:name=".screens.UserType" />
-        <activity android:name=".screens.ClientCompleteProfile" />
-        <activity android:name=".screens.WorkerCompleteProfile" />
+
+        <activity
+            android:name=".screens.UserType"
+            android:theme="@style/FullscreenTheme"/>
+
+        <activity android:name=".screens.ClientCompleteProfile"
+            android:label="@string/title_activity_complete_profile"/>
+
+        <activity android:name=".screens.WorkerCompleteProfile"
+            android:label="@string/title_activity_complete_profile"/>
+
         <activity
             android:name=".screens.ClientHome"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.ClientAddRequest" />
+
+        <activity android:name=".screens.ClientAddRequest"
+            android:label="@string/title_activity_add_request"/>
+
         <activity android:name=".screens.WorkerDetails" />
+
         <activity android:name=".screens.ClientRequestDetails" />
+
         <activity
             android:name=".screens.WorkerHome"
             android:label="@string/title_activity_worker_home"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".screens.WorkerRequestDetails"
             android:label="@string/title_activity_worker_request_details"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.WorkerOfferHelp">
-        </activity>
+
+        <activity android:name=".screens.WorkerOfferHelp"/>
+
     </application>
 
 </manifest>

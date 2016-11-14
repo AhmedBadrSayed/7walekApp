@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/user_login"
                 android:text="@string/client"
@@ -68,7 +68,7 @@
             android:layout_marginTop="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/worker_login"
                 android:text="@string/worker"

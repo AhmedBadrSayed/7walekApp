@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:indicatorName="BallPulseIndicator"
+        app:indicatorColor="@color/colorAccent"
         />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

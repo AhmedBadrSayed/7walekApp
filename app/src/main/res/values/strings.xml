@@ -7,6 +7,7 @@
     <!--              WorkerCompleteProfile       -->
     <string name="tv_name_label">الاسم</string>
     <string name="tv_address_label">العنوان</string>
+    <string name="hint_name">الاسم</string>
     <string name="tv_number_label">رقم المحمول</string>
     <string name="tv_profession_label">المهنه</string>
     <string name="tv_years_label">سنوات الخبره</string>
@@ -14,11 +15,14 @@
     <string name="btn_done_label">حفظ</string>
     <string name="btn_login_label">تسجيل الدخول</string>
     <string name="title_activity_user_profile">طلباتى</string>
+    <string name="title_activity_complete_profile">بياناتي</string>
+    <string name="title_activity_add_request">اضافة طلب</string>
     <string name="action_settings">اعدادات</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="msg_dialog_title">جارى انشاء حساب جديد</string>
+    <string name="msg_dialog_wait">يرجى الانتظار</string>
+    <string name="msg_empty_request">لا يوجد طلبات حاليه</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_tab_user_requests">الطلبات الحاليه</string>
     <string name="title_tab_user_history">الطلبات السابقه</string>
     <string name="txt_dummy">القرية الذكية , مبني وزارة الاتصالات</string>
@@ -38,8 +42,8 @@
     <string name="offered_price">السعر المعروض</string>
     <string name="decline_worker">غير موافق</string>
     <string name="accept_worker">موافق</string>
-    <string name="title_activity_worker_home">WorkerHome</string>
-    <string name="title_activity_worker_request_details">WorkerRequestDetails</string>
+    <string name="title_activity_worker_home">الشغل القريب</string>
+    <string name="title_activity_worker_request_details">التفاصيل</string>
     <string name="done">تم</string>
     <string name="comment">تعليق</string>
 
@@ -50,6 +54,15 @@
     <string name="pref_my_lat">lat</string>
     <string name="pref_my_lng">lng</string>
     <string name="pref_my_address">address</string>
+
+    <string name="pref_worker_name">w_name</string>
+    <string name="pref_worker_phone">w_phone</string>
+    <string name="pref_worker_photo">w_photo</string>
+    <string name="pref_worker_lat">w_lat</string>
+    <string name="pref_worker_lng">w_lng</string>
+    <string name="pref_worker_address">w_address</string>
+
+
     <string name="pref_my_profession">profession</string>
     <string name="pref_extra_job_key">job_key</string>
     <string name="pref_client_token">c_token</string>
@@ -60,7 +73,10 @@
     <string name="menu_title_setting">اعدادات</string>
     <string name="menu_title_profile">الملف الشخصى</string>
     <string name="meun_title_logout">خروج</string>
-
+    <string name="err_name">من فضلك ادخل اسمك</string>
+    <string name="err_tel">من فضلك ادخل رقم الهاتف</string>
+    <string name="err_profession">من فضلك ادخل المهنه</string>
+    <string name="err_exp">من فضلك ادخل سنوات الخبره</string>
 
 
 </resources>

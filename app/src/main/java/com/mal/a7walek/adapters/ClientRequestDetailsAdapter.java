@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mal.a7walek.R;
+import com.mal.a7walek.data.PrefManager;
 import com.mal.a7walek.models.Comment;
 import com.squareup.picasso.Picasso;
 
@@ -38,9 +39,10 @@ public class ClientRequestDetailsAdapter extends RecyclerView.Adapter<ClientRequ
 
     @Override
     public void onBindViewHolder(requestsViewHolder holder, int position) {
-        holder.workerName.setText(clientRequests.get(position).getWorker().getUserName());
+        holder.workerName.setText(clientRequests.get(position).getWorkerToken());
         holder.requestDescription.setText(clientRequests.get(position).getComment());
-        Picasso.with(ctx).load(clientRequests.get(position).getWorker().getImage_url()).into(holder.requestPhoto);
+        String image = PrefManager.getStringValue(ctx,ctx.getString(R.string.pref_worker_photo),"");
+        Picasso.with(ctx).load(image).into(holder.requestPhoto);
         holder.pricetv.setText(clientRequests.get(position).getPrice());
     }
 

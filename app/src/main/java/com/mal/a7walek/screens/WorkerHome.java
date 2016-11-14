@@ -161,13 +161,13 @@ public class WorkerHome extends AppCompatActivity
     /**********************************************************************************************************/
 
     public void setupNavHeaderValues(){
-        String clientName = PrefManager.getStringValue(this,getString(R.string.pref_my_name),"");
+        String clientName = PrefManager.getStringValue(this,getString(R.string.pref_worker_name),"");
         worker_profile_name.setText(clientName);
 
-        String userImage = PrefManager.getStringValue(this,getString(R.string.pref_my_photo),"");
+        String userImage = PrefManager.getStringValue(this,getString(R.string.pref_worker_photo),"");
         Picasso.with(this).load(userImage).into(worker_profile_image);
 
-        String userAddress = PrefManager.getStringValue(this,getString(R.string.pref_my_address),"");
+        String userAddress = PrefManager.getStringValue(this,getString(R.string.pref_worker_address),"");
         worker_profile_address.setText(userAddress);
 
         String profession = PrefManager.getStringValue(this,getString(R.string.pref_my_profession),"");

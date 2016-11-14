@@ -48,6 +48,8 @@ public class ClientHome extends AppCompatActivity
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
+    @BindView(R.id.tv_empty_data)TextView tv_empty_data;
+
     TextView client_profile_name;
     ImageView client_profile_image;
     TextView client_profile_address;
@@ -206,6 +208,8 @@ public class ClientHome extends AppCompatActivity
         if(jobsEvent.getJobs()!=null && jobsEvent.getJobs().size()>0){
             requestsList.addAll(jobsEvent.getJobs());
             clientRequestsAdapter.notifyDataSetChanged();
+        }else{
+            tv_empty_data.setVisibility(View.VISIBLE);
         }
     }
 
