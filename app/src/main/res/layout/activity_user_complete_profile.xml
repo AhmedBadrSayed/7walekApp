@@ -10,39 +10,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".screens.ClientCompleteProfile"
-    android:background="#ffffff">
+    android:background="@drawable/pattern_complete_profile">
 
-    <com.wang.avi.AVLoadingIndicatorView
+    <!--<com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avl_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        app:indicatorColor="@color/colorAccent"
-        app:indicatorName="BallPulseIndicator"
-        />
+        />-->
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/master_complete_profile"/>
-
-        <Button
-            android:id="@+id/btn_save"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:background="#3F51B5"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/btn_done_label"
-            android:onClick="saveProfile"/>
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <include layout="@layout/master_complete_profile"/>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/add_btn"
+                android:textColor="#ffffff"
+                android:textSize="15pt"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/btn_done_label"
+                android:onClick="saveProfile"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 

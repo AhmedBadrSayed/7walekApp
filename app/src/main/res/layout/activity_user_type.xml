@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".screens.UserType"
-    android:background="@drawable/home_background">
+    android:background="@drawable/pattern">
 
     <ImageView
         android:layout_width="100dp"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/user_name"
         tools:text="Ahmed"
-        android:textColor="#3F51B5"
+        android:textColor="#0071bc"
         android:textSize="25dp"
         android:layout_below="@+id/profile_pic"
         android:layout_centerHorizontal="true"
@@ -42,14 +42,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/user_login"
-                android:text="@string/client"
+                android:src="@drawable/holder_choice"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:textColor="#1126de"
+                android:background="@android:color/transparent"
                 android:textSize="18pt"
                 android:clickable="true" />
 
@@ -67,11 +68,12 @@
             android:orientation="horizontal"
             android:layout_marginTop="30dp">
 
-            <TextView
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/worker_login"
-                android:text="@string/worker"
+                android:src="@drawable/worker_choice"
+                android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:textColor="#1126de"

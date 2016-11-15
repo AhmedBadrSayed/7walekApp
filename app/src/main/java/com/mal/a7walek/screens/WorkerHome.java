@@ -26,7 +26,7 @@ import com.mal.a7walek.utility.FirebaseManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
-import com.wang.avi.AVLoadingIndicatorView;
+//import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class WorkerHome extends AppCompatActivity
     @BindView(R.id.fab)FloatingActionButton fab;
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
-    @BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
+    //@BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
     TextView worker_profile_name;
     ImageView worker_profile_image;
     TextView worker_profile_address;
@@ -62,7 +62,7 @@ public class WorkerHome extends AppCompatActivity
 
         ButterKnife.bind(this);
 
-        avl_loading.show();
+        //avl_loading.show();
 
         mBus = BusProvider.getInstance();
 
@@ -107,7 +107,8 @@ public class WorkerHome extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplication() , WorkerOfferHelp.class));
+                //startActivity(new Intent(getApplication() , WorkerOfferHelp.class));
+                //TODO map activity display requests on map
             }
         });
 
@@ -214,7 +215,7 @@ public class WorkerHome extends AppCompatActivity
         }*/
 
         // add nearby jobs to the adapter and view it to worker
-        avl_loading.hide();
+        //avl_loading.hide();
 
         requestsList.addAll(jobsArray);
         workerHomeAdapter.notifyDataSetChanged();

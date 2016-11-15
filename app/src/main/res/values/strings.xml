@@ -36,8 +36,8 @@
     <string name="order">طلب</string>
     <string name="dummy_address">الحى السادس 6 اكتوبر</string>
     <string name="offered_price">السعر المعروض</string>
-    <string name="decline_worker">غير موافق</string>
-    <string name="accept_worker">موافق</string>
+    <string name="decline_worker">رفض</string>
+    <string name="accept_worker">قبول</string>
     <string name="title_activity_worker_home">WorkerHome</string>
     <string name="title_activity_worker_request_details">WorkerRequestDetails</string>
     <string name="done">تم</string>

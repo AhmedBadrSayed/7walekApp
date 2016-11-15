@@ -24,11 +24,12 @@
     <include layout="@layout/content_worker_request_details" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_worker_apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/offer_help_icon" />
+        android:background="@android:color/transparent"
+        android:src="@drawable/offer_help_floating_btn" />
 
 </android.support.design.widget.CoordinatorLayout>

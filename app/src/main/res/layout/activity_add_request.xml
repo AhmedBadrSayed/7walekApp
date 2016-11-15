@@ -9,57 +9,71 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".screens.ClientAddRequest"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="@drawable/pattern_holderrequestview">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:id="@+id/request_upload_image"
-        android:src="@drawable/image"/>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/photo_icon"
-        android:id="@+id/upload"
-        />
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/request_add_desc"
-        android:drawableRight="@drawable/desc_icon"
-        android:hint="@string/Description"
-        />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:id="@+id/request_add_category"
-        android:drawableRight="@drawable/category_icon"
-        android:hint="@string/profession"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_publish_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/order"
-        android:background="#3F51B5"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:id="@+id/request_upload_image"
+                android:src="@drawable/image"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/camera"
+                android:id="@+id/upload"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/request_add_desc"
+                android:drawableRight="@drawable/desc_icon"
+                android:hint="@string/Description"
+                android:background="@drawable/textbox"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:id="@+id/request_add_category"
+                android:drawableRight="@drawable/category_icon"
+                android:hint="@string/profession"
+                android:background="@drawable/textbox"
+                />
+
+            <Button
+                android:id="@+id/btn_publish_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:text="@string/order"
+                android:background="@drawable/add_btn"
+                android:textColor="#FFFFFF"
+                android:textSize="15pt"
+                android:textStyle="bold"
+                />
 
 
+        </LinearLayout>
 
+    </ScrollView>
 
 
 </LinearLayout>

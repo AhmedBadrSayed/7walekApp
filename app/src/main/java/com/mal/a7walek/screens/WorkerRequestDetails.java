@@ -81,7 +81,7 @@ public class WorkerRequestDetails extends AppCompatActivity {
         clientName = (TextView) findViewById(R.id.detailed_client_name);
         clientAddress = (TextView) findViewById(R.id.detailed_client_address);
         clientDescription = (TextView) findViewById(R.id.detailed_client_description);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab_worker_apply);
     }
 
 

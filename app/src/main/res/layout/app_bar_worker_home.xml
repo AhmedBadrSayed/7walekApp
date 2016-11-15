@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/address" />
+        android:src="@drawable/arrange_by_gps"
+        android:background="@android:color/transparent"/>
 
 </android.support.design.widget.CoordinatorLayout>

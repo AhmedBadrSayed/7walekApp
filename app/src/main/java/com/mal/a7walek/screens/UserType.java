@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +14,8 @@ import com.squareup.picasso.Picasso;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
 
-    TextView workerTV, userTV, userNameTV;
+    TextView userNameTV;
+    ImageButton btnWorker,btnHolder;
     ImageView profilePicIV;
     String UserInfo, UserName, ProfilePic;
     String[] DetailsArray;
@@ -38,12 +40,12 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void setViews(){
-        workerTV = (TextView) findViewById(R.id.worker_login);
-        userTV = (TextView) findViewById(R.id.user_login);
+        btnWorker = (ImageButton) findViewById(R.id.worker_login);
+        btnHolder = (ImageButton) findViewById(R.id.user_login);
         userNameTV = (TextView) findViewById(R.id.user_name);
         profilePicIV = (ImageView) findViewById(R.id.profile_pic);
-        workerTV.setOnClickListener(this);
-        userTV.setOnClickListener(this);
+        btnWorker.setOnClickListener(this);
+        btnHolder.setOnClickListener(this);
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.mal.a7walek.utility.FirebaseManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
-import com.wang.avi.AVLoadingIndicatorView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +44,10 @@ public class ClientHome extends AppCompatActivity
     private static String LOG_TAG = "CardViewActivity";
 
     @BindView(R.id.toolbar)Toolbar toolbar;
-    @BindView(R.id.fab)FloatingActionButton fab;
+    @BindView(R.id.fab_client_add)FloatingActionButton fab;
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
-    @BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
+    //@BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
     TextView client_profile_name;
     ImageView client_profile_image;
     TextView client_profile_address;
@@ -61,7 +61,7 @@ public class ClientHome extends AppCompatActivity
 
         ButterKnife.bind(this);
 
-        avl_loading.show();
+        //avl_loading.show();
 
         mBus = BusProvider.getInstance();
 
@@ -201,7 +201,7 @@ public class ClientHome extends AppCompatActivity
     @Subscribe
     public void OnGetUserJobs(GetUserJobsEvent jobsEvent){
 
-        avl_loading.hide();
+        //avl_loading.hide();
 
         if(jobsEvent.getJobs()!=null && jobsEvent.getJobs().size()>0){
             requestsList.addAll(jobsEvent.getJobs());

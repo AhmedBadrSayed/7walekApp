@@ -8,16 +8,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mal.a7walek.screens.WorkerOfferHelp"
-    android:background="#ffffff">
+    android:background="@drawable/pattern_offer_help">
 
     <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/worker_offer_price"
-    android:layout_marginTop="30dp"
-    android:drawableRight="@drawable/money_bag_icon"
-    android:textColor="#ffffff"
-    android:hint="@string/offered_price"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/worker_offer_price"
+        android:layout_marginTop="30dp"
+        android:drawableRight="@drawable/money_bag_icon"
+        android:textColor="#ffffff"
+        android:background="@drawable/textbox"
+        android:hint="@string/offered_price"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -25,6 +26,7 @@
         android:id="@+id/worker_offer_description"
         android:layout_below="@+id/worker_offer_price"
         android:layout_marginTop="30dp"
+        android:background="@drawable/textbox"
         android:drawableRight="@drawable/desc_icon"
         android:textColor="#ffffff"
         android:hint="@string/comment"/>
@@ -40,7 +42,7 @@
         android:text="@string/done"
         android:textColor="#ffffff"
         android:textSize="12pt"
-        android:background="@color/colorAccent"/>
+        android:background="@drawable/done"/>
 
 
 

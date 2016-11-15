@@ -7,7 +7,8 @@
     card_view:cardCornerRadius="9dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/workerName"
-            android:layout_toLeftOf="@+id/requestImage"
+            android:layout_toLeftOf="@+id/worker_image"
             android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
             android:textDirection="rtl"
@@ -51,8 +52,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/client_price"
             android:text="150.0 EGP"
-            android:layout_alignBottom="@+id/worker_image"
-            android:layout_alignEnd="@+id/worker_description" />
+            android:layout_alignLeft="@+id/worker_description"
+            android:layout_alignBottom="@+id/worker_image" />
 
     </RelativeLayout>
 

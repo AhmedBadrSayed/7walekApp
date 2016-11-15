@@ -19,7 +19,8 @@ import com.mal.a7walek.utility.FirebaseManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
-import com.wang.avi.AVLoadingIndicatorView;
+
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +38,12 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
     EditText phoneNumber;
     @BindView(R.id.image_location)
     ImageView image_location;
-    @BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
+    //@BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
 
     String UserInfo, UserName, ProfilePic;
     String[] DetailsArray;
+    private static final Pattern PHONE_PATTERN = Pattern
+            .compile("[0-9]{1,250}");
 
     String TAG = ClientCompleteProfile.this.getClass().getSimpleName();
     Bus mBus;
@@ -115,8 +118,8 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
         this.getWindow().setAttributes(lp);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);;
 
-        avl_loading.setVisibility(View.VISIBLE);
-        avl_loading.show();
+//        avl_loading.setVisibility(View.VISIBLE);
+//        avl_loading.show();
 
         //save user info in shared pref
         saveInfoInSharedPref();
@@ -163,7 +166,7 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
 
         if(addRecordEvent.isSuccess()){
 
-            avl_loading.hide();
+            //avl_loading.hide();
 
             //user added successfully
             startActivity(new Intent(this,ClientHome.class));
@@ -175,4 +178,14 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
         }
 
     }
+
+    /**
+     * mobile number validation
+     */
+
+    private boolean isMobileValid(String mobile) {
+        return PHONE_PATTERN.matcher(mobile).matches();
+    }
+
+
 }

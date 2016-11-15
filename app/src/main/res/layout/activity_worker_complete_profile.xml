@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ffffff">
+    android:background="@drawable/pattern_worker_complete_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,35 +22,42 @@
             android:id="@+id/et_profession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/textbox"
             android:hint="@string/tv_profession_label"/>
 
         <EditText
             android:id="@+id/et_years_of_exp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@drawable/textbox"
             android:hint="@string/tv_years_label"/>
 
         <Button
             android:id="@+id/btn_upload_id"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_id_label"
             android:layout_marginBottom="10dp"
-            android:layout_gravity="right"
+            android:textColor="#FFFFFF"
+            android:textSize="15pt"
             android:onClick="uploadNationalID"
-            android:background="#ffffff"/>
+            android:background="@drawable/id_btn"/>
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="15pt"
             android:textStyle="bold"
             android:text="@string/btn_done_label"
             android:onClick="saveProfile"
-            android:background="#3F51B5"/>
+            android:background="@drawable/done"/>
 
     </LinearLayout>
 
