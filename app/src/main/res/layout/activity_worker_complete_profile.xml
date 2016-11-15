@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:inputType="text"
             android:background="@drawable/textbox"
             android:hint="@string/tv_profession_label"/>
 
@@ -31,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:inputType="number"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:background="@drawable/textbox"
             android:hint="@string/tv_years_label"/>
