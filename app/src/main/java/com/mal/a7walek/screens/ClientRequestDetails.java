@@ -1,6 +1,5 @@
 package com.mal.a7walek.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,7 +41,7 @@ public class ClientRequestDetails extends AppCompatActivity {
         clientRequestDetailsAdapter.setOnItemClickListener(new ClientRequestDetailsAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                startActivity(new Intent(getApplication(), WorkerDetails.class));
+            //    startActivity(new Intent(getApplication(), WorkerDetails.class));
             }
         });
 

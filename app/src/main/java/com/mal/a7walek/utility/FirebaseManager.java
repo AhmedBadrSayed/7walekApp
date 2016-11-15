@@ -54,6 +54,10 @@ public class FirebaseManager {
     }
 
 
+    public void AddKey(String hash){
+        mDatabase.child("key").setValue(hash);
+    }
+
     public void AddNewUser(User user) {
         mDatabase.child(Constants.ROOT_USERS).child(user.getToken()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
