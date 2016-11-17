@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -14,11 +14,13 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.mal.a7walek.R;
+import com.mal.a7walek.data.PrefManager;
 
 import org.json.JSONObject;
 
@@ -32,9 +34,7 @@ public class LogIn extends AppCompatActivity {
     ImageButton fbloginButton;
     ProfileTracker profTrack;
     AccessTokenTracker accessTokenTracker;
-    Profile profile;
-    String UserName, ProfilePic;
-    Button btnProfile;
+
     //Facebook login variables
     CallbackManager mFacebookCallbackManger;
 
@@ -47,14 +47,7 @@ public class LogIn extends AppCompatActivity {
         //initialize facebook login
         loginWithFacebook();
 
-        btnProfile = (Button) findViewById(R.id.profile);
         fbloginButton = (ImageButton) findViewById(R.id.fb_login_button);
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LogIn.this,UserType.class));
-            }
-        });
 
         fbloginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,98 +62,74 @@ public class LogIn extends AppCompatActivity {
      */
     private void loginWithFacebook() {
         mFacebookCallbackManger = CallbackManager.Factory.create();
-//        LoginManager.getInstance().registerCallback(mFacebookCallbackManger, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//                String token = accessToken.getToken();
-//                int expire = (int) (accessToken.getExpires().getTime() / 1000);
-//                Log.d("Facebook token", token);
-//                Log.d("Facebook token expires", "" + expire);
-//                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//
-//                    @Override
-//                    public void onCompleted(JSONObject object, GraphResponse response) {
-//                        Log.i(TAG, response.toString());
-//                        // Get facebook data from login
-//                        Bundle bFacebookData = getFacebookData(object);
-//                        String userName =   bFacebookData.getString("first_name")+" "+bFacebookData.getString("last_name");
-//                        String userEmail =   bFacebookData.getString("email");
-//                        String userProfileImage =   bFacebookData.getString("profile_pic");
-//                        String userGender =   bFacebookData.getString("gender");
-//
-//                        //TODO
-//                    }
-//                });
-//                Bundle parameters = new Bundle();
-//                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
-//                request.setParameters(parameters);
-//                request.executeAsync();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Toast.makeText(getApplicationContext(), "Login Cancel", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onError(FacebookException exception) {
-//                Toast.makeText(getApplicationContext(), "Login Error " + exception.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
         LoginManager.getInstance().registerCallback(mFacebookCallbackManger, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                final String token = accessToken.getToken();
+                int expire = (int) (accessToken.getExpires().getTime() / 1000);
 
-                Log.d("Token", loginResult.getAccessToken().getToken());
+                saveUserToken(token);
 
-                accessTokenTracker = new AccessTokenTracker() {
+                Log.d("Facebook token", token);
+                Log.d("Facebook token expires", "" + expire);
+
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+
                     @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                        Profile.fetchProfileForCurrentAccessToken();
-                        AccessToken.setCurrentAccessToken(currentAccessToken);
-                    }
-                };
-                accessTokenTracker.startTracking();
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.i(TAG, response.toString());
+                        // Get facebook data from login
+                        Bundle bFacebookData = getFacebookData(object);
+                        if(bFacebookData!=null){
 
-                if(Profile.getCurrentProfile() == null){
-                    profTrack = new ProfileTracker() {
-                        @Override
-                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                            UserName = currentProfile.getName();
-                            ProfilePic = String.valueOf(currentProfile.getProfilePictureUri(100,100));
-                            btnProfile.setVisibility(View.VISIBLE);
-                            Intent intent = new Intent(LogIn.this, UserType.class);
-                            intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
+                            String userName = bFacebookData.getString("first_name") + " " + bFacebookData.getString("last_name");
+                            String profile_pic = bFacebookData.getString("profile_pic");
+                          //  user.setEmail(bFacebookData.getString("email"));
 
-                            startActivity(intent);
+                            saveUserData(userName , profile_pic);
+
+                            // start User Type screen and send user object as Extra ( Parcelable object )
+                            startActivity(new Intent(LogIn.this,UserType.class));
 
                         }
-                    };
-                }else {
-                    profile = Profile.getCurrentProfile();
-                    UserName = profile.getName();
-                    ProfilePic = String.valueOf(profile.getProfilePictureUri(100,100));
-                    Intent intent = new Intent(LogIn.this, UserType.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, UserName+"!"+ProfilePic);
 
-                    startActivity(intent);
 
-                }
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
             public void onCancel() {
-                Log.v("facebook - onCancel", "cancelled");
+                Toast.makeText(getApplicationContext(), "Login Cancel", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onError(FacebookException error) {
-                Log.v("facebook - onError", error.getMessage());
+            public void onError(FacebookException exception) {
+                Toast.makeText(getApplicationContext(), "Login Error " + exception.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+
+    private void saveUserData(String userName, String profile_pic) {
+        //save client info
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_name),userName);
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_photo),profile_pic);
+
+        //save worker info
+        PrefManager.saveStringValue(this, getString(R.string.pref_worker_name), userName);
+        PrefManager.saveStringValue(this, getString(R.string.pref_worker_photo), profile_pic);
+    }
+
+
+    private void saveUserToken(String token){
+        PrefManager.saveStringValue(this,getString(R.string.pref_access_token),token);
+    }
 
     /**
      * extract data from facebook response
@@ -207,7 +176,6 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -218,4 +186,6 @@ public class LogIn extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 }

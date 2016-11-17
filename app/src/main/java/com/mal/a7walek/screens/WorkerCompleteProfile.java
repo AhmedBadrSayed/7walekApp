@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +30,7 @@ import com.mal.a7walek.bus.AddRecordEvent;
 import com.mal.a7walek.bus.BusProvider;
 import com.mal.a7walek.bus.UploadImageEvent;
 import com.mal.a7walek.data.PrefManager;
+import com.mal.a7walek.models.User;
 import com.mal.a7walek.models.Worker;
 import com.mal.a7walek.utility.FirebaseManager;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -58,46 +57,44 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
     @BindString(R.string.err_tel)String err_tel;
 
     @BindView(R.id.image_profile)
-    ImageView workerImage;
+    ImageView iv_workerImage;
 
     @NotEmpty (message = "error name" )
     @BindView(R.id.tv_name)
-    TextView workerName;
+    TextView txt_workerName;
 
     @NotEmpty (message = "error address" )
     @BindView(R.id.et_address)
-    EditText workerAddress;
+    EditText et_workerAddress;
 
     @NotEmpty (message = "error number" )
     @BindView(R.id.et_phone_number)
-    EditText phoneNumber;
+    EditText et_phoneNumber;
 
     @NotEmpty (message = "error profession" )
     @BindView(R.id.et_profession)
-    EditText workerProfession;
+    EditText et_workerProfession;
 
     @NotEmpty
     @BindView(R.id.et_years_of_exp)
-    EditText workerExp;
+    EditText et_workerExp;
 
     @BindView(R.id.btn_save)
     Button btn_save;
+
     @BindView(R.id.btn_upload_id)
     Button uploadNationalID;
-    @BindView(R.id.upload)
-    ImageButton upload;
 
-    String UserInfo, UserName, ProfilePic;
-    String[] DetailsArray;
+    ProgressDialog mProgressDialog;
 
-    ProgressDialog barProgressDialog;
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
+    User user;
 
-    byte[] byteArray;
+    Bitmap mBitmapNational_id;
 
     private static final int SELECT_PHOTO = 100;
-
+    String workerName,workerPhoto;
     Bus mBus;
     FirebaseManager mFirebaseManager;
 
@@ -112,30 +109,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
 
         mBus = BusProvider.getInstance();
 
-        //  getExtras_And_PrepareViews();
-
-        mFirebaseManager = new FirebaseManager();
-
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-            }
-        });
-
-
-//        Intent intent = this.getIntent();
-//        if(intent!=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-//            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
-//            DetailsArray = UserInfo.split("!");
-//            UserName = DetailsArray[0];
-//            ProfilePic = DetailsArray[1];
-//        }
-//
-//        workerName.setText(UserName);
-//        Picasso.with(this).load(ProfilePic).into(workerImage);
+        getExtras_And_PrepareViews();
 
     }
 
@@ -163,27 +137,19 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
     /****************************************************************************************************************/
 
 
-    public void launchProgress() {
-        barProgressDialog = new ProgressDialog(WorkerCompleteProfile.this);
-
-        barProgressDialog.setTitle(getString(R.string.msg_dialog_title));
-        barProgressDialog.setMessage(getString(R.string.msg_dialog_title));
-        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
-        barProgressDialog.show();
-    }
-
-
     public void getExtras_And_PrepareViews() {
-        Intent intent = this.getIntent();
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
-            DetailsArray = UserInfo.split("!");
-            UserName = DetailsArray[0];
-            ProfilePic = DetailsArray[1];
 
-            workerName.setText(UserName);
-            Picasso.with(this).load(ProfilePic).into(workerImage);
+        workerName = PrefManager.getStringValue(this,getString(R.string.pref_client_name),null);
+        workerPhoto = PrefManager.getStringValue(this,getString(R.string.pref_client_photo),null);
+
+        if (txt_workerName !=null && workerPhoto!=null) {
+            txt_workerName.setText(workerName);
+            Picasso.with(this).load(workerPhoto).into(iv_workerImage);
         }
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getString(R.string.msg_dialog_wait));
     }
 
 
@@ -210,8 +176,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
                     InputStream imageStream = null;
                     try {
                         imageStream = getContentResolver().openInputStream(selectedImage);
-                        Bitmap image = BitmapFactory.decodeStream(imageStream);
-                        workerImage.setImageBitmap(image);
+                        mBitmapNational_id = BitmapFactory.decodeStream(imageStream);
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -229,45 +194,36 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
      */
     public void saveProfile(View view) {
 
+        mProgressDialog.show();
 
-            launchProgress();
+        //save user info in shared pref
+        saveInfoInSharedPref();
 
-            //save user info in shared pref
-            saveInfoInSharedPref();
-
-            //add user to firebase database
-            uploadPhoto();
-
-
-
+        //add user to firebase database
+        uploadPhoto();
     }
 
 
+    /**
+     * upload the select image fot national id to firebase
+     *
+     */
     public void uploadPhoto() {
-        // Get the data from an ImageView as bytes
-        workerImage.setDrawingCacheEnabled(true);
-        workerImage.buildDrawingCache();
-        Bitmap bitmap = workerImage.getDrawingCache();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        mBitmapNational_id.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        mFirebaseManager.uploadPhoto(data, getReandomNumber());
-    }
-
-
-    public String getReandomNumber() {
-        Random rn = new Random();
-        int n = 500 - 220 + 1;
-        int i = rn.nextInt() % n;
-        return ((220 + i) + "");
+        // upload user national id image to firebase storage
+        // assign user name to that image  for example : ( omar_id.jpg )
+        mFirebaseManager.uploadPhoto(data, txt_workerName.getText().toString()+"_id");
     }
 
 
     public void saveInfoInSharedPref() {
-        PrefManager.saveStringValue(this, getString(R.string.pref_worker_address), workerAddress.getText().toString());
-        PrefManager.saveStringValue(this, getString(R.string.pref_worker_name), workerName.getText().toString());
-        PrefManager.saveStringValue(this, getString(R.string.pref_my_profession), workerProfession.getText().toString());
+        PrefManager.saveStringValue(this, getString(R.string.pref_worker_address), et_workerAddress.getText().toString());
+        PrefManager.saveStringValue(this, getString(R.string.pref_worker_name), workerName);
+        PrefManager.saveStringValue(this, getString(R.string.pref_worker_photo), workerPhoto);
+        PrefManager.saveStringValue(this, getString(R.string.pref_my_profession), et_workerProfession.getText().toString());
         PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lat), (float) 2.11);
         PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lng), (float) 98.55);
     }
@@ -279,18 +235,27 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
      * and receive callback with failed OR success insert
      *
      */
-    private void saveWorkerToFirebase(String ProfilePic) {
-        Worker worker = new Worker(workerName.getText().toString(), workerName.getText().toString(), ProfilePic
-                , workerAddress.getText().toString(), 2.11, 98.55, phoneNumber.getText().toString(), "id_url", workerProfession.getText().toString());
+    private void saveWorkerToFirebase(String nationalID_url) {
+
+        Worker worker = new Worker(txt_workerName.getText().toString()
+                , workerName
+                , workerPhoto
+                , et_workerAddress.getText().toString()
+                , 2.11, 98.55
+                , et_phoneNumber.getText().toString()
+                , nationalID_url
+                , et_workerProfession.getText().toString());
 
         mFirebaseManager.AddNewWorker(worker);
     }
 
 
+    /**
+     *
+     * @param uploadEvent
+     */
     @Subscribe
     public void OnUploadComplete(UploadImageEvent uploadEvent) {
-        Log.d("Image URL : ", uploadEvent.getUrl());
-        PrefManager.saveStringValue(this, getString(R.string.pref_worker_photo), uploadEvent.getUrl());
         saveWorkerToFirebase(uploadEvent.getUrl());
     }
 
@@ -303,9 +268,10 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
     @Subscribe
     public void OnWorkerAddedEvent(AddRecordEvent addRecordEvent) {
 
+        mProgressDialog.hide();
+
         if (addRecordEvent.isSuccess()) {
             //user added successfully
-            barProgressDialog.hide();
             startActivity(new Intent(this, WorkerHome.class));
         } else {
             //error adding user
@@ -337,7 +303,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
         try {
             addresses = geocoder.getFromLocation(mLocation.getLatitude(), mLocation.getLongitude(), 1);
             String address = addresses.get(0).getAddressLine(0);
-            workerAddress.setText(address);
+            et_workerAddress.setText(address);
         } catch (IOException e) {
             e.printStackTrace();
         }

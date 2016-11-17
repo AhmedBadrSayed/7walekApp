@@ -127,10 +127,10 @@ public class ClientAddRequest extends AppCompatActivity {
 
         String category = requestCategory.getText().toString();
         String description = requestDescription.getText().toString();
-        String userKey = PrefManager.getStringValue(this,getString(R.string.pref_my_phone),"");
-        String address = PrefManager.getStringValue(this,getString(R.string.pref_my_address),"");
-        double lat = PrefManager.getFloatValue(this,getString(R.string.pref_my_lat),0);
-        double lng = PrefManager.getFloatValue(this,getString(R.string.pref_my_lng),0);
+        String userKey = PrefManager.getStringValue(this,getString(R.string.pref_client_phone),"");
+        String address = PrefManager.getStringValue(this,getString(R.string.pref_client_address),"");
+        double lat = PrefManager.getFloatValue(this,getString(R.string.pref_client_lat),0);
+        double lng = PrefManager.getFloatValue(this,getString(R.string.pref_client_lng),0);
 
         mFirebaseManager.AddNewJob(new Job(imageURL,description,category,userKey,address,lat,lng));
     }

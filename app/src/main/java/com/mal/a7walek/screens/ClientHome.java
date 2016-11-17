@@ -158,13 +158,13 @@ public class ClientHome extends AppCompatActivity
     /**************************************************************************************************************/
 
     public void setupNavHeaderValues(){
-        String clientName = PrefManager.getStringValue(this,getString(R.string.pref_my_name),"");
+        String clientName = PrefManager.getStringValue(this,getString(R.string.pref_client_name),"");
         client_profile_name.setText(clientName);
 
-        String userImage = PrefManager.getStringValue(this,getString(R.string.pref_my_photo),"");
+        String userImage = PrefManager.getStringValue(this,getString(R.string.pref_client_photo),"");
         Picasso.with(this).load(userImage).into(client_profile_image);
 
-        String userAddress = PrefManager.getStringValue(this,getString(R.string.pref_my_address),"");
+        String userAddress = PrefManager.getStringValue(this,getString(R.string.pref_client_address),"");
         client_profile_address.setText(userAddress);
     }
 
@@ -189,7 +189,7 @@ public class ClientHome extends AppCompatActivity
      */
     private void loadMyPostedJobs() {
         FirebaseManager mFirebaseManager = new FirebaseManager();
-        String userKey = getString(R.string.pref_my_phone);
+        String userKey = getString(R.string.pref_client_phone);
         mFirebaseManager.getUserJobs(PrefManager.getStringValue(this,userKey,""));
     }
 

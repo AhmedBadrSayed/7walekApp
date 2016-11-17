@@ -10,31 +10,13 @@
     tools:context=".screens.UserType"
     android:background="@drawable/pattern">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/profile_pic"
-        tools:src="@drawable/com_facebook_button_icon_blue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_name"
-        tools:text="Ahmed"
-        android:textColor="#0071bc"
-        android:textSize="25dp"
-        android:layout_below="@+id/profile_pic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/user_name"
+        android:layout_centerInParent="true"
         android:layout_marginTop="70dp">
 
         <LinearLayout

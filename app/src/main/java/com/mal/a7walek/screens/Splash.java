@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.mal.a7walek.R;
+import com.mal.a7walek.data.PrefManager;
 import com.mal.a7walek.utility.FirebaseManager;
 
 import java.security.MessageDigest;
@@ -50,11 +51,17 @@ public class Splash extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent start = new Intent(Splash.this, UserType.class);
-//                    if(PrefManager.getStringValue(Splash.this,getString(R.string.pref_my_name),"").equals(""))
-//                        startActivity(start);
-//                    else
+
+                    // if user logged in before then go to User Type screen
+                    // else go to login screen
+                    if(isUserLoggedIn()){
+                        Intent start = new Intent(Splash.this, UserType.class);
                         startActivity(start);
+                    }else{
+                        Intent start = new Intent(Splash.this, LogIn.class);
+                        startActivity(start);
+                    }
+
                 }
             }
         };
@@ -67,4 +74,18 @@ public class Splash extends AppCompatActivity {
         super.onPause();
         this.finish();
     }
+
+
+    /**
+     * check if user logged in before
+     *
+     * @return
+     */
+    private boolean isUserLoggedIn(){
+        if(PrefManager.getStringValue(this,getString(R.string.pref_access_token),null)!=null)
+            return true;
+
+        return false;
+    }
+
 }

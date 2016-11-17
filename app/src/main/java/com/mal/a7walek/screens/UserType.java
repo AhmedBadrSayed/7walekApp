@@ -5,44 +5,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.mal.a7walek.R;
 import com.mal.a7walek.data.PrefManager;
 
 public class UserType extends AppCompatActivity implements View.OnClickListener {
 
-    TextView userNameTV;
     ImageButton btnWorker,btnHolder;
-    ImageView profilePicIV;
-    String UserInfo, UserName, ProfilePic;
-    String[] DetailsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type);
-        setViews();
 
-//        Intent intent = this.getIntent();
-//        if(intent!=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-//            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
-//            DetailsArray = UserInfo.split("!");
-//            UserName = DetailsArray[0];
-//            ProfilePic = DetailsArray[1];
-//        }
-//
-//        userNameTV.setText(UserName);
-//        //feh moshkela fil picasso
-//        Picasso.with(this).load(ProfilePic).into(profilePicIV);
+        setViews();
     }
 
     public void setViews(){
         btnWorker = (ImageButton) findViewById(R.id.worker_login);
         btnHolder = (ImageButton) findViewById(R.id.user_login);
-        userNameTV = (TextView) findViewById(R.id.user_name);
-        profilePicIV = (ImageView) findViewById(R.id.profile_pic);
         btnWorker.setOnClickListener(this);
         btnHolder.setOnClickListener(this);
     }
@@ -50,25 +31,38 @@ public class UserType extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+
             case R.id.user_login:
-                if(!PrefManager.getStringValue(this,getString(R.string.pref_my_phone),"").equals("")){
+                if(isCompletedProfile("client"))
                     startActivity(new Intent(UserType.this,ClientHome.class) );
-                }else {
-                    Intent intent = new Intent(UserType.this, ClientCompleteProfile.class);
-                //    intent.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
-                    startActivity(intent);
-                }
+                else
+                    startActivity(new Intent(UserType.this, ClientCompleteProfile.class));
+
                 break;
 
+
             case R.id.worker_login:
-                if(!PrefManager.getStringValue(this,getString(R.string.pref_my_profession),"").equals("")){
+                if(isCompletedProfile("worker"))
                     startActivity(new Intent(UserType.this,WorkerHome.class) );
-                }else {
-                    Intent intent1 = new Intent(UserType.this, WorkerCompleteProfile.class);
-               //     intent1.putExtra(Intent.EXTRA_TEXT, UserName + "!" + ProfilePic);
-                    startActivity(intent1);
-                }
+                else
+                    startActivity(new Intent(UserType.this, WorkerCompleteProfile.class));
+
                 break;
         }
+    }
+
+
+    /**
+     * check if user completed his profile by checking the phone value in shared preference
+     *
+     * @param TAG
+     * @return
+     */
+    private boolean isCompletedProfile(String TAG){
+        if(TAG.equals("client"))
+            return PrefManager.getStringValue(this,getString(R.string.pref_client_phone),null) != null;
+
+        return PrefManager.getStringValue(this,getString(R.string.pref_worker_phone),null) != null;
+
     }
 }

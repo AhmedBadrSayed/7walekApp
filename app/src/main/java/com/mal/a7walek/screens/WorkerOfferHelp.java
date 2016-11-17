@@ -31,7 +31,7 @@ public class WorkerOfferHelp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String job_key = getIntent().getExtras().getString(getString(R.string.pref_extra_job_key));
-                String worker_token = PrefManager.getStringValue(getApplicationContext(),getString(R.string.pref_my_name),"");
+                String worker_token = PrefManager.getStringValue(getApplicationContext(),getString(R.string.pref_client_name),"");
                 Comment comment = new Comment(worker_token,job_key,txtComment.getText().toString(),offeredPrice.getText().toString());
                 mFirebaseManager.AddNewComment(comment);
 

@@ -1,11 +1,11 @@
 package com.mal.a7walek.screens;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +20,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
-import java.util.regex.Pattern;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,23 +27,20 @@ import butterknife.ButterKnife;
 public class ClientCompleteProfile extends AppCompatActivity implements View.OnClickListener{
 
     @BindView(R.id.image_profile)
-    ImageView userImage;
+    ImageView iv_userImage;
     @BindView(R.id.tv_name)
-    TextView userName;
+    TextView txt_userName;
     @BindView(R.id.et_address)
-    EditText userAddress;
+    EditText et_userAddress;
     @BindView(R.id.et_phone_number)
-    EditText phoneNumber;
-    @BindView(R.id.image_location)
-    ImageView image_location;
-    //@BindView(R.id.avl_loading)AVLoadingIndicatorView avl_loading;
+    EditText et_phoneNumber;
 
-    String UserInfo, UserName, ProfilePic;
-    String[] DetailsArray;
-    private static final Pattern PHONE_PATTERN = Pattern
-            .compile("[0-9]{1,250}");
+    ProgressDialog mProgressDialog;
+
+    String clientName,clientPhoto;
 
     String TAG = ClientCompleteProfile.this.getClass().getSimpleName();
+
     Bus mBus;
 
     @Override
@@ -92,16 +87,20 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
     /****************************************************************************************************************/
 
     public void getExtras_And_PrepareViews() {
-        Intent intent = this.getIntent();
-        if(intent!=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            UserInfo = intent.getStringExtra(Intent.EXTRA_TEXT);
-            DetailsArray = UserInfo.split("!");
-            UserName = DetailsArray[0];
-            ProfilePic = DetailsArray[1];
 
-            userName.setText(UserName);
-            Picasso.with(this).load(ProfilePic).into(userImage);
+        clientName = PrefManager.getStringValue(this,getString(R.string.pref_client_name),null);
+        clientPhoto = PrefManager.getStringValue(this,getString(R.string.pref_client_photo),null);
+
+        if (clientName!=null && clientPhoto!=null) {
+            txt_userName.setText(clientName);
+            Picasso.with(this).load(clientPhoto).into(iv_userImage);
         }
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getString(R.string.msg_dialog_wait));
+
     }
 
 
@@ -113,13 +112,7 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
      */
     public void saveProfile(View view) {
 
-        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-        lp.dimAmount=0.0f;
-        this.getWindow().setAttributes(lp);
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);;
-
-//        avl_loading.setVisibility(View.VISIBLE);
-//        avl_loading.show();
+        mProgressDialog.show();
 
         //save user info in shared pref
         saveInfoInSharedPref();
@@ -130,11 +123,11 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
 
 
     public void saveInfoInSharedPref(){
-        PrefManager.saveStringValue(this,getString(R.string.pref_my_address),userAddress.getText().toString());
-        PrefManager.saveStringValue(this,getString(R.string.pref_my_name),UserName);
-        PrefManager.saveStringValue(this,getString(R.string.pref_my_photo),ProfilePic);
-        PrefManager.saveFloatValue(this,getString(R.string.pref_my_lat),(float)2.11);
-        PrefManager.saveFloatValue(this,getString(R.string.pref_my_lng),(float)98.55);
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_address), et_userAddress.getText().toString());
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_name),clientName);
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_photo),clientPhoto);
+        PrefManager.saveFloatValue(this,getString(R.string.pref_client_lat),(float)2.11);
+        PrefManager.saveFloatValue(this,getString(R.string.pref_client_lng),(float)98.55);
     }
 
 
@@ -145,11 +138,16 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
      *
      */
     private void saveUserToFirebase(){
-        User user = new User(UserName,phoneNumber.getText().toString(),ProfilePic
-                ,userAddress.getText().toString(),2.11,98.55,phoneNumber.getText().toString());
+        User firebaseUser = new User( clientName
+                , et_phoneNumber.getText().toString()
+                , clientPhoto
+                , et_userAddress.getText().toString()
+                , 2.11,98.55
+                , et_phoneNumber.getText().toString());
 
         FirebaseManager mFirebaseManager = new FirebaseManager();
-        mFirebaseManager.AddNewUser(user);
+
+        mFirebaseManager.AddNewUser(firebaseUser);
     }
 
 
@@ -161,12 +159,12 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
     @Subscribe
     public void OnUserAddedEvent(AddRecordEvent addRecordEvent){
 
+        mProgressDialog.hide();
+
         // save user_key which is his phone number in shared preference to be used in future calls
-        PrefManager.saveStringValue(this,getString(R.string.pref_my_phone),phoneNumber.getText().toString());
+        PrefManager.saveStringValue(this,getString(R.string.pref_client_phone), et_phoneNumber.getText().toString());
 
         if(addRecordEvent.isSuccess()){
-
-            //avl_loading.hide();
 
             //user added successfully
             startActivity(new Intent(this,ClientHome.class));
@@ -179,13 +177,7 @@ public class ClientCompleteProfile extends AppCompatActivity implements View.OnC
 
     }
 
-    /**
-     * mobile number validation
-     */
 
-    private boolean isMobileValid(String mobile) {
-        return PHONE_PATTERN.matcher(mobile).matches();
-    }
 
 
 }
