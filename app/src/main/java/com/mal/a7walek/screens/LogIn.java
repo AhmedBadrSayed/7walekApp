@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -15,31 +16,39 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.mal.a7walek.R;
+
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 
 public class LogIn extends AppCompatActivity {
 
-    LoginButton loginButton;
-    CallbackManager callbackManager;
+    private static final String TAG = "LogIn";
+    ImageButton fbloginButton;
     ProfileTracker profTrack;
     AccessTokenTracker accessTokenTracker;
     Profile profile;
     String UserName, ProfilePic;
     Button btnProfile;
+    //Facebook login variables
+    CallbackManager mFacebookCallbackManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
+        FacebookSdk.sdkInitialize(this);
         setContentView(R.layout.activity_log_in);
 
-        btnProfile = (Button) findViewById(R.id.profile);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("public_profile");
+        //initialize facebook login
+        loginWithFacebook();
 
+        btnProfile = (Button) findViewById(R.id.profile);
+        fbloginButton = (ImageButton) findViewById(R.id.fb_login_button);
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +56,59 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        fbloginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(LogIn.this, Arrays.asList("email","public_profile"));
+            }
+        });
+    }
+
+    /**
+     * initialize facebook login
+     */
+    private void loginWithFacebook() {
+        mFacebookCallbackManger = CallbackManager.Factory.create();
+//        LoginManager.getInstance().registerCallback(mFacebookCallbackManger, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//                String token = accessToken.getToken();
+//                int expire = (int) (accessToken.getExpires().getTime() / 1000);
+//                Log.d("Facebook token", token);
+//                Log.d("Facebook token expires", "" + expire);
+//                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//
+//                    @Override
+//                    public void onCompleted(JSONObject object, GraphResponse response) {
+//                        Log.i(TAG, response.toString());
+//                        // Get facebook data from login
+//                        Bundle bFacebookData = getFacebookData(object);
+//                        String userName =   bFacebookData.getString("first_name")+" "+bFacebookData.getString("last_name");
+//                        String userEmail =   bFacebookData.getString("email");
+//                        String userProfileImage =   bFacebookData.getString("profile_pic");
+//                        String userGender =   bFacebookData.getString("gender");
+//
+//                        //TODO
+//                    }
+//                });
+//                Bundle parameters = new Bundle();
+//                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+//                request.setParameters(parameters);
+//                request.executeAsync();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Toast.makeText(getApplicationContext(), "Login Cancel", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(FacebookException exception) {
+//                Toast.makeText(getApplicationContext(), "Login Error " + exception.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        LoginManager.getInstance().registerCallback(mFacebookCallbackManger, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
@@ -100,11 +161,52 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+    /**
+     * extract data from facebook response
+     * @param object
+     * @return
+     */
+    private Bundle getFacebookData(JSONObject object) {
+
+        Bundle bundle = new Bundle();
+        try {
+            String id = object.getString("id");
+
+            try {
+                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=300&height=200");
+                Log.i("profile_pic", profile_pic + "");
+                bundle.putString("profile_pic", profile_pic.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return null;
+            }
+            bundle.putString("idFacebook", id);
+            if (object.has("first_name"))
+                bundle.putString("first_name", object.getString("first_name"));
+            if (object.has("last_name"))
+                bundle.putString("last_name", object.getString("last_name"));
+            if (object.has("email"))
+                bundle.putString("email", object.getString("email"));
+            if (object.has("gender"))
+                bundle.putString("gender", object.getString("gender"));
+
+            return bundle;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return bundle;
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //call facebook callback
+        mFacebookCallbackManger.onActivityResult(requestCode, resultCode, data);
+
+    }
+
 
     @Override
     protected void onStop() {
