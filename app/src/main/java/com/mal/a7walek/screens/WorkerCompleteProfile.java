@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -61,7 +62,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
 
     @NotEmpty (message = "error name" )
     @BindView(R.id.tv_name)
-    EditText workerName;
+    TextView workerName;
 
     @NotEmpty (message = "error address" )
     @BindView(R.id.et_address)
