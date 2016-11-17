@@ -48,12 +48,14 @@
     <string name="comment">تعليق</string>
 
     <!-- shared preference section -->
-    <string name="pref_my_name">name</string>
-    <string name="pref_my_phone">phone</string>
-    <string name="pref_my_photo">photo</string>
-    <string name="pref_my_lat">lat</string>
-    <string name="pref_my_lng">lng</string>
-    <string name="pref_my_address">address</string>
+    <string name="pref_access_token">user_token</string>
+
+    <string name="pref_client_name">name</string>
+    <string name="pref_client_phone">phone</string>
+    <string name="pref_client_photo">photo</string>
+    <string name="pref_client_lat">lat</string>
+    <string name="pref_client_lng">lng</string>
+    <string name="pref_client_address">address</string>
 
     <string name="pref_worker_name">w_name</string>
     <string name="pref_worker_phone">w_phone</string>
@@ -77,6 +79,9 @@
     <string name="err_tel">من فضلك ادخل رقم الهاتف</string>
     <string name="err_profession">من فضلك ادخل المهنه</string>
     <string name="err_exp">من فضلك ادخل سنوات الخبره</string>
+
+
+    <string name="extras_user">user_info</string>
 
 
 
