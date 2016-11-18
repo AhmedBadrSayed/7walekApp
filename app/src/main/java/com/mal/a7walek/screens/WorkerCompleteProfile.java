@@ -2,18 +2,19 @@ package com.mal.a7walek.screens;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -40,14 +42,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.mal.a7walek.screens.ClientCompleteProfile.checkGpsAv;
 
 public class WorkerCompleteProfile extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -89,6 +90,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
 
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
+    private AlertDialog mGpsDialog;
     User user;
 
     Bitmap mBitmapNational_id;
@@ -105,14 +107,46 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
 
         ButterKnife.bind(this);
 
+        mFirebaseManager = new FirebaseManager();
         buildGoogleApiClient();
 
         mBus = BusProvider.getInstance();
 
         getExtras_And_PrepareViews();
 
+        checkGps();
     }
 
+
+    private void checkGps() {
+
+        if (!checkGpsAv(this)) {
+            if (mGpsDialog == null) {
+                mGpsDialog = buildAlertMessageNoGps();
+            }
+            if (mGpsDialog != null) {
+                mGpsDialog.show();
+            }
+        }
+    }
+
+    private AlertDialog buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("تفعيل الموقع الذهاب اللى الاعدادات؟")
+                .setCancelable(false)
+                .setPositiveButton("حسنا", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("الغاء", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        return builder.create();
+    }
 
     @Override
     protected void onStart() {
@@ -194,6 +228,12 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
      */
     public void saveProfile(View view) {
 
+
+        if(mLocation==null){
+            Toast.makeText(this,"قم بتفعيل موقعك اولا",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mProgressDialog.show();
 
         //save user info in shared pref
@@ -224,8 +264,8 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
         PrefManager.saveStringValue(this, getString(R.string.pref_worker_name), workerName);
         PrefManager.saveStringValue(this, getString(R.string.pref_worker_photo), workerPhoto);
         PrefManager.saveStringValue(this, getString(R.string.pref_my_profession), et_workerProfession.getText().toString());
-        PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lat), (float) 2.11);
-        PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lng), (float) 98.55);
+        PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lat), (float) mLocation.getLatitude());
+        PrefManager.saveFloatValue(this, getString(R.string.pref_worker_lng), (float) mLocation.getLongitude());
     }
 
 
@@ -241,7 +281,7 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
                 , workerName
                 , workerPhoto
                 , et_workerAddress.getText().toString()
-                , 2.11, 98.55
+                , mLocation.getLatitude(), mLocation.getLongitude()
                 , et_phoneNumber.getText().toString()
                 , nationalID_url
                 , et_workerProfession.getText().toString());
@@ -296,17 +336,17 @@ public class WorkerCompleteProfile extends AppCompatActivity implements GoogleAp
             return;
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            addresses = geocoder.getFromLocation(mLocation.getLatitude(), mLocation.getLongitude(), 1);
-            String address = addresses.get(0).getAddressLine(0);
-            et_workerAddress.setText(address);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Geocoder geocoder;
+//        List<Address> addresses;
+//        geocoder = new Geocoder(this, Locale.getDefault());
+//
+//        try {
+//            addresses = geocoder.getFromLocation(mLocation.getLatitude(), mLocation.getLongitude(), 1);
+//            String address = addresses.get(0).getAddressLine(0);
+//            et_workerAddress.setText(address);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
     }

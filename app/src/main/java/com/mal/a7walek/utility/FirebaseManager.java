@@ -118,21 +118,25 @@ public class FirebaseManager {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             HashMap<String,Object>jobRef= (HashMap<String,Object>)dataSnapshot.getValue();
-                            jobRef.put(newJobKey,"true");
 
-                            childUpdates.put("/" + Constants.ROOT_USERS + "/" + job.getUser_token() + "/" + Constants.ROOT_JOBS + "/", jobRef);
+                            if(jobRef!=null){
+                                jobRef.put(newJobKey,"true");
 
-                            mDatabase.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    mBus.post(new AddRecordEvent(true));
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    mBus.post(new AddRecordEvent(false));
-                                }
-                            });
+                                childUpdates.put("/" + Constants.ROOT_USERS + "/" + job.getUser_token() + "/" + Constants.ROOT_JOBS + "/", jobRef);
+
+                                mDatabase.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        mBus.post(new AddRecordEvent(true));
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        mBus.post(new AddRecordEvent(false));
+                                    }
+                                });
+                            }
+
                         }
 
                         @Override
@@ -286,19 +290,22 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 HashMap<String,Object>jobs = (HashMap<String, Object>) dataSnapshot.getValue();
-                Iterator it = jobs.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
+                if(jobs!=null){
+                    Iterator it = jobs.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry)it.next();
 
-                    Job userJob = new Job();
-                    userJob.BuildJob((HashMap<String,Object>)pair.getValue());
-                    userJob.setKey(pair.getKey().toString());
+                        Job userJob = new Job();
+                        userJob.BuildJob((HashMap<String,Object>)pair.getValue());
+                        userJob.setKey(pair.getKey().toString());
 
-                    allJobs.add(userJob);
-                    if(allJobs.size()==jobs.size())
-                        mBus.post(new GetAllJobsEvent(allJobs));
+                        allJobs.add(userJob);
+                        if(allJobs.size()==jobs.size())
+                            mBus.post(new GetAllJobsEvent(allJobs));
 
+                    }
                 }
+
 
             }
 
@@ -371,43 +378,49 @@ public class FirebaseManager {
 
                 final HashMap<String,Object>comments = (HashMap<String, Object>) dataSnapshot.getValue();
 
-                Iterator it = comments.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
+                if(comments!=null){
 
-                    Query commentQuery = mDatabase.child(Constants.ROOT_COMMENTS).child(pair.getKey().toString());
-                    commentQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final Comment comment = dataSnapshot.getValue(Comment.class);
+                    Iterator it = comments.entrySet().iterator();
 
-                            Query workerQuery = mDatabase.child(Constants.ROOT_WORKERS).child(comment.getWorkerToken());
-                            workerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    comment.setWorker(dataSnapshot.getValue(Worker.class));
-                                    workerComments.add(comment);
-                                    if(workerComments.size()==comments.size()){
-                                        mBus.post(new GetAllCommentsEvent(workerComments));
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry)it.next();
+
+                        Query commentQuery = mDatabase.child(Constants.ROOT_COMMENTS).child(pair.getKey().toString());
+                        commentQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                final Comment comment = dataSnapshot.getValue(Comment.class);
+
+                                Query workerQuery = mDatabase.child(Constants.ROOT_WORKERS).child(comment.getWorkerToken());
+                                workerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        comment.setWorker(dataSnapshot.getValue(Worker.class));
+                                        workerComments.add(comment);
+                                        if(workerComments.size()==comments.size()){
+                                            mBus.post(new GetAllCommentsEvent(workerComments));
+                                        }
+
                                     }
 
-                                }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        mBus.post(new ErrorEvent(databaseError.toString()));
+                                    }
+                                });
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    mBus.post(new ErrorEvent(databaseError.toString()));
-                                }
-                            });
+                            }
 
-                        }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                mBus.post(new ErrorEvent(databaseError.toString()));
+                            }
+                        });
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            mBus.post(new ErrorEvent(databaseError.toString()));
-                        }
-                    });
-
+                    }
                 }
+
+
 
             }
 
